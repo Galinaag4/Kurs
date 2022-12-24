@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -41,7 +43,7 @@ public class JavaQuestionServiceTest {
         Question expected = new Question("Question", "Answer");
         Mockito.when(questionRepository.add(any())).thenReturn(expected);
         Question actual = out.add(expected);
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
         Mockito.verify(questionRepository, Mockito.only().add(expected));
     }
 
@@ -50,14 +52,14 @@ public class JavaQuestionServiceTest {
         Question expected = new Question("Question", "Answer");
         Mockito.when(questionRepository.add(any())).thenReturn(expected);
         Question actual = out.add(expected.getQuestion(), expected.getAnswer());
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
         Mockito.verify(questionRepository, Mockito.only().add(expected));
 
     }
 
     @Test
     void addWithNullQuestion() {
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.add(null, "Answer");
         });
         Mockito.verify(questionRepository, Mockito.never()).add(any());
@@ -65,7 +67,7 @@ public class JavaQuestionServiceTest {
 
     @Test
     void addWithBlankQuestion() {
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.add("", "Answer");
         });
         Mockito.verify(questionRepository, Mockito.never()).add(any());
@@ -73,7 +75,7 @@ public class JavaQuestionServiceTest {
 
     @Test
     void addWithNullAnswer() {
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.add("Question", null);
         });
         Mockito.verify(questionRepository, Mockito.never()).add(any());
@@ -81,7 +83,7 @@ public class JavaQuestionServiceTest {
 
     @Test
     void addWithBlankAnswer() {
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.add("Question", "");
         });
         Mockito.verify(questionRepository, Mockito.never()).add(any());
@@ -90,9 +92,9 @@ public class JavaQuestionServiceTest {
     @Test
     void removeQuestion() {
         Question expected = new Question("Question", "Answer");
-        Mockito.when(questionRepository.remove(any())).thanReturn(expected);
+        Mockito.when(questionRepository.remove(any())).thenReturn(expected);
         Question actual = out.remove(expected);
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
         Mockito.verify(questionRepository, Mockito.only()).remove(expected);
     }
 
@@ -101,7 +103,7 @@ public class JavaQuestionServiceTest {
         Collection<Question> expected = List.of(new Question("Question", "Answer"));
         Mockito.when(questionRepository.getAll()).thenReturn(expected);
         Collection<Question> actual = out.getAll();
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
         Mockito.verify(questionRepository, Mockito.only()).getAll();
     }
 
@@ -110,9 +112,9 @@ public class JavaQuestionServiceTest {
         Question expected = new Question("Question", "Answer");
         Collection<Question> expectedList = List.of(expected);
         Mockito.when(questionRepository.getAll()).thenReturn(expectedList);
-        Mockito.when(utilService.getRandomQuestion(expectedList)).thanReturn(expected);
+        Mockito.when(utilService.getRandomQuestion(expectedList)).thenReturn(expected);
         Question actual = out.getRandomQuestion();
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
         Mockito.verify(questionRepository, Mockito.only()).getAll();
         Mockito.verify(utilService, Mockito.only()).getRandomQuestion(expectedList);
     }

@@ -17,11 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+
 
 @ExtendWith(MockitoExtension.class)
 public class ExaminerServiseImplTest {
@@ -52,8 +55,8 @@ public class ExaminerServiseImplTest {
 
     @Test
     void getQuestionsWithIncorrectAmount() {
-        Mockito.when(questionService.getAll().thenReturn(Set.of(new Question("Qestion", "Answer"))));
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        Mockito.when(questionService.getAll()).thenReturn(Set.of(new Question("Question","Answer")));
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.getQuestions(5);
         });
         Mockito.verify(questionService, Mockito.times(1)).getAll();

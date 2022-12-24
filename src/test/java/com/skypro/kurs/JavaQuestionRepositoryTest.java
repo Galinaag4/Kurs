@@ -7,7 +7,8 @@ import com.skypro.kurs.repository.JavaQuestionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -27,9 +28,9 @@ public class JavaQuestionRepositoryTest {
     void addQuestion() {
         Question expected = new Question("JavaQuestion4", "Answer4");
         Question actual = out.add(expected);
-        Assertions.assertThat(actual).isEqualTo(expected);
-        Assertions.assertThat(out.getAll().contains(expected)).isTrue();
-        Assertions.assertThat(out.getAll().size()).isEqualTo(4);
+        assertThat(actual).isEqualTo(expected);
+        assertThat(out.getAll().contains(expected)).isTrue();
+        assertThat(out.getAll().size()).isEqualTo(4);
 
 
     }
@@ -37,16 +38,16 @@ public class JavaQuestionRepositoryTest {
     @Test
     void addExistingQuestion() {
         Question expected = new Question("JavaQuestion3", "Answer3");
-        Assertions.assertThat(out.getAll().contains(expected)).isTrue();
+        assertThat(out.getAll().contains(expected)).isTrue();
         Question actual = out.add(expected);
-        Assertions.assertThat(actual).isEqualTo(expected);
-        Assertions.assertThat(out.getAll().size()).isEqualTo(3);
+        assertThat(actual).isEqualTo(expected);
+        assertThat(out.getAll().size()).isEqualTo(3);
 
     }
 
     @Test
     void addNullQuestion() {
-        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> {
             out.add(null);
         });
 
@@ -56,19 +57,19 @@ public class JavaQuestionRepositoryTest {
     void removeExistingQuestion() {
         Question expected = new Question("JavaQuestion1", "Answer1");
         Question actual = out.remove(expected);
-        Assertions.assertThat(actual).isEqualTo(expected);
-        Assertions.assertThat(out.getAll().size()).isEqualTo(2);
+        assertThat(actual).isEqualTo(expected);
+        assertThat(out.getAll().size()).isEqualTo(2);
     }
 
     @Test
     void removeNotExistingQuestion() {
-        Assertions.assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> {
             out.remove(null);
         });
     }
 
     @Test
     void getAll() {
-        Assertions.assertThat(out.getAll().size()).isEqualTo(3);
+        assertThat(out.getAll().size()).isEqualTo(3);
     }
 }
