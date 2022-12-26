@@ -44,7 +44,7 @@ public class JavaQuestionServiceTest {
         Mockito.when(questionRepository.add(any())).thenReturn(expected);
         Question actual = out.add(expected);
         assertThat(actual).isEqualTo(expected);
-        Mockito.verify(questionRepository, Mockito.only().add(expected));
+        Mockito.verify(questionRepository, Mockito.only()).add(expected);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class JavaQuestionServiceTest {
         Mockito.when(questionRepository.add(any())).thenReturn(expected);
         Question actual = out.add(expected.getQuestion(), expected.getAnswer());
         assertThat(actual).isEqualTo(expected);
-        Mockito.verify(questionRepository, Mockito.only().add(expected));
+        Mockito.verify(questionRepository, Mockito.only()).add(expected);
 
     }
 
